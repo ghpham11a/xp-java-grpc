@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xp-grpc-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xp-grpc-server
+  template:
+    metadata:
+      labels:
+        app: xp-grpc-server
+    spec:
+      containers:
+      - name: xp-grpc-server
+        imagePullPolicy: Never
+        image: xp-grpc-server:latest
+        ports:
+        - containerPort: 50051
+        envFrom:
+          - configMapRef:
+              name: xp-grpc-server-configmap
+        env:
+          - name: POSTGRES_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: xp-grpc-server-secrets
+                key: POSTGRES_DATABASE
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: xp-grpc-server-secrets
+                key: POSTGRES_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: xp-grpc-server-secrets
+                key: POSTGRES_PASSWORD
+          - name: SPRING_DATASOURCE_URL
+            value: "jdbc:postgresql://$(POSTGRES_HOST):5432/$(POSTGRES_DATABASE)"
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name

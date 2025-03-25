@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package com.ghpham11a.cases;
+
+import "buf/validate/validate.proto";
+
+// option java_package = "com.ghpham11a.xp_grpc_server.gen";
+option java_multiple_files = true;
+
+enum CaseCode {
+    CODE_NULL = 0;
+    CODE_ONE = 1;
+    CODE_TWO = 2;
+    CODE_THREE = 3;
+}

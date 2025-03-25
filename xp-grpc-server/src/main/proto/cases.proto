@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package com.ghpham11a.cases;
+
+import "buf/validate/validate.proto";
+import "proto/constants.proto";
+
+// option java_package = "com.ghpham11a.xp_grpc_server.gen";
+option java_multiple_files = true;
+
+message OpenCase {
+    string identifier = 1 [(buf.validate.field).string.min_len = 5];
+    CaseCode case_code = 2 [(buf.validate.field).enum = { in: [2, 3, 4]}];
+    repeated OpenQuery queries = 3;
+}
+
+message OpenQuery {
+    int32 question_id = 1;
+    int32 answer_id = 2;
+    string answer_value = 3;
+}
+
+message ClosedCase {
+    string identifier = 1 [(buf.validate.field).string.min_len = 5];
+    CaseCode case_code = 2 [(buf.validate.field).enum = { in: [1, 2, 3]}];
+    Query1 query_1 = 3;
+    Query2 query_2 = 4;
+}
+
+message Query1 {
+    int32 question_id = 1;
+    int32 answer_id = 2;
+    string answer_value = 3;
+}
+
+message Query2 {
+    int32 question_id = 1;
+    int32 answer_id = 2;
+    string answer_value = 3;
+}
+
+message CreateCase {
+    oneof case_variant {
+        OpenCase open_case = 1;
+        ClosedCase closed_case = 2;
+    }
+}
+
+message GetOpenCaseRequest {
+    string identifier = 1;
+}
+
+message GetClosedCaseRequest {
+    string identifier = 1;
+}
+
+service CaseService {
+    rpc GetOpenCase (GetOpenCaseRequest) returns (OpenCase);
+    rpc CreateOpenCase (OpenCase) returns (OpenCase);
+    rpc GetClosedCase (GetClosedCaseRequest) returns (ClosedCase);
+    rpc CreateClosedCase (ClosedCase) returns (ClosedCase);
+}
