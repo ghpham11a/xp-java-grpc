@@ -20,7 +20,6 @@ public class CaseServiceImpl extends CaseServiceGrpc.CaseServiceImplBase {
 
     @Override
     public void getOpenCase(GetOpenCaseRequest request, StreamObserver<OpenCase> responseObserver) {
-        System.out.println("CaseServiceImpl::getOpenCase");
         Optional<OpenCase> result = caseRepository.getOpenCaseByIdentifier(request.getIdentifier());
         responseObserver.onNext(result.get());
         responseObserver.onCompleted();
@@ -28,7 +27,6 @@ public class CaseServiceImpl extends CaseServiceGrpc.CaseServiceImplBase {
 
     @Override
     public void createOpenCase(OpenCase request, StreamObserver<OpenCase> responseObserver) {
-        System.out.println("CaseServiceImpl::createOpenCase");
         OpenCase result = caseRepository.createOpenCase(request);
         responseObserver.onNext(result);
         responseObserver.onCompleted();
@@ -36,7 +34,6 @@ public class CaseServiceImpl extends CaseServiceGrpc.CaseServiceImplBase {
 
     @Override
     public void getClosedCase(GetClosedCaseRequest request, StreamObserver<ClosedCase> responseObserver) {
-        System.out.println("CaseServiceImpl::getClosedCase");
         Optional<ClosedCase> result = caseRepository.getClosedCaseByIdentifier(request.getIdentifier());
         responseObserver.onNext(result.get());
         responseObserver.onCompleted();
@@ -44,7 +41,6 @@ public class CaseServiceImpl extends CaseServiceGrpc.CaseServiceImplBase {
 
     @Override
     public void createClosedCase(ClosedCase request, StreamObserver<ClosedCase> responseObserver) {
-        System.out.println("CaseServiceImpl::createClosedCase");
         ClosedCase result = caseRepository.createClosedCase(request);
         responseObserver.onNext(result);
         responseObserver.onCompleted();

@@ -26,13 +26,11 @@ public class CaseServiceImpl implements CaseService {
 
     @Override
     public OpenCase createOpenCase(OpenCase openCase) {
-        System.out.println("CaseServiceImpl::createOpenCase");
         return caseServiceStub.createOpenCase(openCase);
     }
 
     @Override
     public OpenCase findOpenCase(String identifier) {
-        System.out.println("CaseServiceImpl::findOpenCase");
         GetOpenCaseRequest request = GetOpenCaseRequest
                 .newBuilder()
                 .setIdentifier(identifier)
@@ -43,19 +41,15 @@ public class CaseServiceImpl implements CaseService {
 
     @Override
     public ClosedCase createClosedCase(ClosedCase closedCase) {
-        System.out.println("CaseServiceImpl::createClosedCase");
-
         return caseServiceStub.createClosedCase(closedCase);
     }
 
     @Override
     public ClosedCase findClosedCase(String identifier) {
-        System.out.println("CaseServiceImpl::findClosedCase");
         GetClosedCaseRequest request = GetClosedCaseRequest
                 .newBuilder()
                 .setIdentifier(identifier)
                 .build();
-
         return caseServiceStub.getClosedCase(request);
     }
 }
